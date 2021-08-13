@@ -28,8 +28,9 @@ export default {
 </script>
 <style scoped>
 
-.myAnimeListItem .hidden{
-    display: none;
+.myAnimeListItem .cancel.hidden{
+    /* display: none; */
+    bottom: 100%
 }
 .flex{
     display: flex;
@@ -46,6 +47,7 @@ export default {
     left:0px;
     right: 0px;
     bottom: 0px;
+    transition: bottom 1s ;
     position: absolute;
     background: black;
     opacity: 0.7;
