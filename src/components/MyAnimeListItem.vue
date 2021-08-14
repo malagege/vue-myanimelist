@@ -40,6 +40,7 @@ export default {
     min-width: 275px;
     height: 250px;
     position: relative;
+    cursor: pointer;
 }
 
 .myAnimeListItem .cancel{
@@ -47,7 +48,7 @@ export default {
     left:0px;
     right: 0px;
     bottom: 0px;
-    transition: bottom 1s ;
+    transition: bottom .5s ;
     position: absolute;
     background: black;
     opacity: 0.7;
