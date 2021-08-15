@@ -3,3 +3,5 @@ node_modules
 dist
 dist-ssr
 *.local
+public/json/*.json
+src/assets/json/*.json

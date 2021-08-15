@@ -1,12 +1,16 @@
 {
   "name": "vue-myanimelist",
+  "type": "module",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "json-build": "node ./scripts/build/index.js",
     "build": "vite build",
     "serve": "vite preview"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "ora": "^5.4.1",
     "vue": "^3.0.5"
   },
   "devDependencies": {
