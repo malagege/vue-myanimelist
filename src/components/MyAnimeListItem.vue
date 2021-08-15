@@ -1,5 +1,10 @@
 <template>
-    <div class="myAnimeListItem" @click="toggle($event)">
+    <div class="myAnimeListItem"
+        @click="toggle($event)" 
+        @contextmenu="orderItem($event)" 
+        :style="{order: item.order}"
+        :data-order="item.order"
+    >
         <div class="cancel" :class="{hidden: item.show}"></div>
         <div class="myAnimeListItem__name">{{item.name}}</div>
         <div class="flex">
@@ -19,9 +24,13 @@ export default {
     emits: ['update:item'],
     methods:{
         toggle(ent){
-            console.log(ent)
+            // console.log(ent)
             this.item.show = !!!this.item.show
             this.$emit('update:item', this.item)
+        },
+        orderItem(event){
+            this.item.order = prompt(`請輸入「${this.item.name}」動畫名次`)
+            event.preventDefault(); 
         }
     }
 }
@@ -41,6 +50,19 @@ export default {
     height: 250px;
     position: relative;
     cursor: pointer;
+    order: 999;
+}
+
+.myAnimeListItem::before{
+  content: attr(data-order);
+  color:tomato;
+  background:rgba(0, 0, 0, .7);
+  font-weight: bold;
+  font-size: 3rem;
+  line-height: 1;
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
 }
 
 .myAnimeListItem .cancel{
