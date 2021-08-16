@@ -5,9 +5,9 @@ import MyAnimeList from '../components/MyAnimeList.vue'
 import json from'../assets/json/animeMenu.json'
 
 const routes = [
-    { path: '/', component: MyAnimeList,props:{jsonpath: json[0].url} },
+    { path:'/', redirect: json[0].url},
     { path: '/:jsonpath', component: MyAnimeList , props: true},
-    { path: '/.*', redirect: '/'}
+    // { path: '/.*', redirect: '/'}
 ];
 
 // json.forEach(data => {

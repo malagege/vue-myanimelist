@@ -3,12 +3,17 @@
     <div class="container justify-content-start">
         <a class="navbar-brand" href="#">
         <img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
-        新翻圖表產生器
+        新番圖表產生器
         </a>
         <div id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
             <button class="btn">說明</button>
+        </li>
+        <li>
+            <select v-model="selectAnimeYearMonth" @change="linkAnimeYearMonth($event)">
+                <option v-for="item in json" :key="item.name" :value="item.url">{{item.name}}</option>
+            </select>
         </li>
         </ul>
         </div>
@@ -16,8 +21,31 @@
     </nav>
 </template>
 <script>
+import json from '../assets/json/AnimeMenu.json'
+
+
 export default {
-    
+    data(){
+        return {
+            selectAnimeYearMonth: null,
+            json
+        }
+    },
+    mounted(){
+        console.log('mounted',this.$route.params)
+        this.selectAnimeYearMonth = '/' + this.$route.params.jsonpath
+    },
+    methods:{
+        linkAnimeYearMonth(event){
+            console.log(event.target.value)
+            this.$router.push({
+                path: event.target.value
+            }).catch((err) => {
+                throw new Error(`Problem handling something: ${err}.`);
+            });
+            console.log('test')
+        }
+    }
 }
 </script>
 <style scoped>

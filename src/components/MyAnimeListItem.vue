@@ -90,6 +90,7 @@ export default {
     flex: 1;
     width: 50%;
     height: 200px;
+    object-fit: cover;
 }
 
 .myAnimeListItem__animeImg img{

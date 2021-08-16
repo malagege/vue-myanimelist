@@ -30,7 +30,14 @@ export default{
         console.log(selected)
         axios.get(`src/assets/json/${selected.name}.json`).then(res => this.items = res.data)
 
-    }
+    },
+    async beforeRouteUpdate(to, from) {
+    // 對路由變化做出響應...
+    // this.userData = await fetchUser(to.params.id)
+    console.log('to',to,'from',from);
+    let selected = json.find((obj)=> obj.url === ('/'+to.params.jsonpath) ) || json[0]
+    axios.get(`src/assets/json/${selected.name}.json`).then(res => this.items = res.data)
+  },
 }
 </script>
 <style scoped>
