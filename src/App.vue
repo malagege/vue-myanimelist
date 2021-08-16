@@ -4,9 +4,9 @@
 </template>
 
 <script>
-import Header from '@components/Header.vue'
-import MyAnimeList from '@components/MyAnimeList.vue'
-import HelloWorld from '@components/HelloWorld.vue'
+import Header from './components/Header.vue'
+import MyAnimeList from './components/MyAnimeList.vue'
+import HelloWorld from './components/HelloWorld.vue'
 import "bootstrap/dist/css/bootstrap.min.css"
 import 'bootstrap'
 export default{

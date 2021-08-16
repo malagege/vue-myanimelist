@@ -8,7 +8,7 @@
 
 </template>
 <script>
-import MyAnimeListItem from '@components/MyAnimeListItem.vue'
+import MyAnimeListItem from './MyAnimeListItem.vue'
 import axios from 'axios'
 
 export default{
@@ -21,7 +21,7 @@ export default{
         }
     },
     mounted(){
-        axios.get('src/assets/animelist.json').then(res => this.items = res.data)
+        axios.get('src/assets/json/2021年7月新番.json').then(res => this.items = res.data)
 
     }
 }

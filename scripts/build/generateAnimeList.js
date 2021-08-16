@@ -40,7 +40,7 @@ export default async function generateAnimeMenu (animeMenu) {
         res[i].originalName = $(el).find('table tr:first-child td:first-child p:nth-child(2)').text().replace(/第(.+)期/, '')
         res[i].official = $(el).find('table .link_a')?.attr('href')
         res[i].carrier = { a: "Original", b: "Comic", c: "Novel", d: "Game" }[$(el).find(`td[class^="type"]:nth-child(even)`).attr('class')?.replace(`type_`, '')] || "Original"
-        res[i].staff = $(el).find('.staff')?.html()
+        res[i].staff = $(el).find('.staff')?.text()
     })
 
 
