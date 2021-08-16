@@ -10,8 +10,12 @@
 <script>
 import MyAnimeListItem from './MyAnimeListItem.vue'
 import axios from 'axios'
+import json from '../../src/assets/json/AnimeMenu.json'
 
 export default{
+    props:{
+        jsonpath: String
+    },
     components: {
         MyAnimeListItem
     },
@@ -21,7 +25,10 @@ export default{
         }
     },
     mounted(){
-        axios.get('src/assets/json/2021年7月新番.json').then(res => this.items = res.data)
+        console.log(this.jsonpath)
+        let selected = json.find((obj)=> obj.url === ('/'+this.jsonpath) ) || json[0]
+        console.log(selected)
+        axios.get(`src/assets/json/${selected.name}.json`).then(res => this.items = res.data)
 
     }
 }

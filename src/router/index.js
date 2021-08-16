@@ -1,16 +1,18 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 // import json from '../assets/json/animeMenu.json'
-import App from '../App.vue'
+import MyAnimeList from '../components/MyAnimeList.vue'
 import json from'../assets/json/animeMenu.json'
 
 const routes = [
-    { path: '/', component: App }
+    { path: '/', component: MyAnimeList,props:{jsonpath: json[0].url} },
+    { path: '/:jsonpath', component: MyAnimeList , props: true},
+    { path: '/.*', redirect: '/'}
 ];
 
-json.forEach(data => {
-    routes.push({ path: data.url,component: App})
-});
+// json.forEach(data => {
+//     routes.push({ path: data.url,component: MyAnimeList})
+// });
 
 
 console.log(routes)
