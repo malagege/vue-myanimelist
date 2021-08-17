@@ -31,6 +31,7 @@ export default {
         orderItem(event){
             this.item.order = prompt(`請輸入「${this.item.name}」動畫名次`)
             event.preventDefault(); 
+            this.$emit('update:item', this.item)
         }
     }
 }

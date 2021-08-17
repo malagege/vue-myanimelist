@@ -3,7 +3,7 @@
     <div class="container justify-content-start">
         <a class="navbar-brand" href="#">
         <img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
-        新番圖表產生器
+        我的新番清單
         </a>
         <div id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
