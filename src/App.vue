@@ -1,20 +1,13 @@
 <template>
-  <Header />
   <router-view></router-view>
 </template>
 
 <script>
-import Header from './components/Header.vue'
-import MyAnimeList from './components/MyAnimeList.vue'
-import HelloWorld from './components/HelloWorld.vue'
 import "bootstrap/dist/css/bootstrap.min.css"
 import 'bootstrap'
 export default{
   props: {
     jsonpath: String
-  },
-  components:{
-    Header,MyAnimeList,HelloWorld
   }
 }
 // This starter template is using Vue 3 experimental <script setup> SFCs

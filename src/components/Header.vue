@@ -11,8 +11,8 @@
             <button class="btn">說明</button>
         </li>
         <li>
-            <select v-model="selectAnimeYearMonth" @change="linkAnimeYearMonth($event)">
-                <option v-for="item in json" :key="item.name" :value="item.url">{{item.name}}</option>
+            <select v-if="jsonpath" v-model="selectAnimeYearMonth" @change="linkAnimeYearMonth($event)">
+                <option v-for="item in AnimeMenu" :key="item.name" :value="item.url">{{item.name}}</option>
             </select>
         </li>
         </ul>
@@ -21,19 +21,22 @@
     </nav>
 </template>
 <script>
-import json from '../assets/json/AnimeMenu.json'
+import AnimeMenu from '../assets/json/AnimeMenu.json'
 
 
 export default {
+    props:{
+        jsonpath: String
+    },
     data(){
         return {
-            selectAnimeYearMonth: null,
-            json
+            AnimeMenu
         }
     },
-    mounted(){
-        console.log('mounted',this.$route.params)
-        this.selectAnimeYearMonth = '/' + this.$route.params.jsonpath
+    computed:{
+        selectAnimeYearMonth(){
+            return '/' + this.jsonpath
+        }
     },
     methods:{
         linkAnimeYearMonth(event){
