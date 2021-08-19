@@ -57,10 +57,18 @@ export default {
         changeHash(jsonpath, dataJson){
             console.log('dataJson',dataJson)
             // this.allListObj[jsonpath] = JSON.parse(dataJson)
-
+            let selectedListLess =  this.selectedList.map( s => {
+                let { name,show,order} =  s
+                return {
+                    name,
+                    show,
+                    order
+                }
+                
+            })
             this.$router.replace({
                 path: `/all/${this.urlAnimeList}`,
-                hash: '#'+Base64.encodeURL(JSON.stringify(this.selectedList))
+                hash: '#'+Base64.encodeURL(JSON.stringify(selectedListLess))
             })
         },
         getList(jsonpath){
