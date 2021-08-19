@@ -1,0 +1,104 @@
+<template>
+    <Header />
+    <hr>
+    <div>
+        <div class="text-center"><h1>我的排名清單</h1></div>
+        <MyAnimeList  v-model:items="selectedList"  /> 
+    </div>
+    <div v-for="anime in animeMenu" :key="anime.name">
+        <div class="text-center" @click="getList(anime.name)"><h1>{{anime.name}}</h1></div>
+        <MyAnimeList  v-model:items="allListObj[anime.name]" @changeHash="changeHash(anime.name,$event)" /> 
+    </div>
+</template>
+<script>
+import animeMenu from '../assets/json/AnimeMenu.json'
+import {Base64} from 'js-base64'
+import Header from '../components/Header.vue'
+import MyAnimeList from '../components/MyAnimeList.vue'
+import axios from 'axios'
+export default {
+    props:{
+        openAnimeList:String
+    },
+    components:{
+        Header,MyAnimeList
+    },
+    data(){
+        return{
+            allListObj:{},
+            animeMenu
+        }
+    },
+    computed:{
+        selectedList(){
+            let items = [];
+            this.animeMenu.forEach(anime =>{
+                console.log('selectedList()',this.allListObj[anime.name])
+                console.log('anime.name', anime.name)
+                let selectedItems  = this.allListObj[anime.name]?.filter( (obj)=> obj?.show || obj?.order )
+                if(selectedItems){
+                    items.push(...selectedItems)
+                }
+            })
+            console.log('selectedList::items',items)
+            return items
+        },
+        urlAnimeList(){
+            let openAnimeList = []
+            animeMenu.forEach(anime => {
+                if(this.allListObj[anime.name]?.length ){
+                    openAnimeList.push(anime.name)
+                }
+            })
+            return openAnimeList.join(',')
+        },
+    },
+    methods:{
+        changeHash(jsonpath, dataJson){
+            console.log('dataJson',dataJson)
+            // this.allListObj[jsonpath] = JSON.parse(dataJson)
+
+            this.$router.replace({
+                path: `/all/${this.urlAnimeList}`,
+                hash: '#'+Base64.encodeURL(JSON.stringify(this.selectedList))
+            })
+        },
+        getList(jsonpath){
+            console.log('jsonpath',jsonpath)
+            if((this.allListObj[jsonpath]?.length)) return false
+            axios.get(`src/assets/json/${jsonpath}.json`).then(res => {
+                this.allListObj[jsonpath] = res.data
+                // 取hash資料
+                console.log('this.$route.hash.substr(1)',this.$route.hash.substr(1))
+                console.log(Base64.decode(this.$route.hash.substr(1)))
+                let udata = JSON.parse(Base64.decode(this.$route.hash.substr(1)))
+                udata.forEach(obj => {
+                    let oitem = this.allListObj[jsonpath].find(item => item.name === obj.name)
+                    if (oitem){
+                        oitem.show = obj?.show
+                        oitem.order = obj?.order
+                    }
+                });
+            }).catch(e=>console.log(e))
+        }
+    },
+    mounted(){
+        animeMenu.forEach(anime =>{
+            this.allListObj[`${anime.name}`] = []
+        })
+        if( this.openAnimeList ){
+            let openList = this.openAnimeList.split(',')
+            console.log(openList)
+            openList.forEach(item => this.getList(item))
+        }else{
+            console.log(animeMenu[0].name)
+            this.getList(animeMenu[0].name)
+            console.log(animeMenu[1].name)
+            this.getList(animeMenu[1].name)
+        }
+    },
+}
+</script>
+<style scoped>
+
+</style>

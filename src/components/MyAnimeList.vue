@@ -3,7 +3,8 @@
         <div class="myanimelist">
             <!-- [v-for 循环时直接使用v-model绑定value报错 - 简书](https://www.jianshu.com/p/947b2aa0cd8c) -->
             <MyAnimeListItem 
-                v-for="(item,i) in items" v-model:item="items[i]" 
+                v-for="(item,i) in items" 
+                v-model:item="items[i]" 
                 :key="item.img" 
                 @update:item="udata($event)"
                 />
