@@ -7,7 +7,7 @@
     </div>
     <div  class="position-relative" v-for="anime in animeMenu" :key="anime.name">
         <div class="position-sticky text-center bg-white top-999" @click="getList(anime.name)"><h1>{{anime.name}}</h1></div>
-        <MyAnimeList  v-model:items="allListObj[anime.name]" @changeHash="changeHash(anime.name,$event)" /> 
+        <MyAnimeList v-if="anime.show"  v-model:items="allListObj[anime.name]" @changeHash="changeHash(anime.name,$event)" /> 
     </div>
 </template>
 <script>
@@ -74,7 +74,13 @@ export default {
         },
         getList(jsonpath){
             console.log('jsonpath',jsonpath)
-            if((this.allListObj[jsonpath]?.length)) return false
+                // 實作縮放
+                let theAnimeMenu = this.animeMenu.filter( (obj) => obj.name === jsonpath )
+                theAnimeMenu[0].show = !theAnimeMenu[0]?.show
+                console.log(JSON.parse(JSON.stringify(theAnimeMenu)))
+            if((this.allListObj[jsonpath]?.length)){
+                return false
+            }
             axios.get(`src/assets/json/${jsonpath}.json`).then(res => {
                 this.allListObj[jsonpath] = res.data
                 // 取hash資料
