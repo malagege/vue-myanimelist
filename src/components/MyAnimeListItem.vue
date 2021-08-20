@@ -74,7 +74,7 @@ export default {
     transition: bottom .5s ;
     position: absolute;
     background: black;
-    opacity: 0.7;
+    opacity: 0.45;
     pointer-events: none;
 }
 

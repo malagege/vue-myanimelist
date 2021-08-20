@@ -3,7 +3,7 @@
     <hr>
     <div>
         <div class="text-center"><h1>我的排名清單</h1></div>
-        <MyAnimeList  v-model:items="selectedList"  /> 
+        <MyAnimeList  v-model:items="selectedList" @changeHash="changeHash($event)"  /> 
     </div>
     <div v-for="anime in animeMenu" :key="anime.name">
         <div class="text-center" @click="getList(anime.name)"><h1>{{anime.name}}</h1></div>
@@ -41,6 +41,7 @@ export default {
                 }
             })
             console.log('selectedList::items',items)
+            // items = JSON.parse(JSON.stringify(items))
             return items
         },
         urlAnimeList(){
