@@ -1,12 +1,12 @@
 <template>
     <Header />
     <hr>
-    <div>
-        <div class="text-center"><h1>我的排名清單</h1></div>
+    <div  class="position-relative">
+        <div class="position-sticky text-center bg-white top-999"><h1>我的排名清單</h1></div>
         <MyAnimeList  v-model:items="selectedList" @changeHash="changeHash($event)"  /> 
     </div>
-    <div v-for="anime in animeMenu" :key="anime.name">
-        <div class="text-center" @click="getList(anime.name)"><h1>{{anime.name}}</h1></div>
+    <div  class="position-relative" v-for="anime in animeMenu" :key="anime.name">
+        <div class="position-sticky text-center bg-white top-999" @click="getList(anime.name)"><h1>{{anime.name}}</h1></div>
         <MyAnimeList  v-model:items="allListObj[anime.name]" @changeHash="changeHash(anime.name,$event)" /> 
     </div>
 </template>
@@ -109,5 +109,8 @@ export default {
 }
 </script>
 <style scoped>
-
+.top-999{
+    top:0px; 
+    z-index:999;
+}
 </style>
