@@ -3,7 +3,7 @@
     <MyAnimeList v-model:items="items"  @changeHash="changeHash($event)"/>
 </template>
 <script>
-import animeMenu from '../assets/json/AnimeMenu.json'
+import animeMenu from '../assets/json/animeMenu.json'
 import {Base64} from 'js-base64'
 import Header from '../components/Header.vue'
 import MyAnimeList from '../components/MyAnimeList.vue'

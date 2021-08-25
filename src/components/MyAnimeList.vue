@@ -15,7 +15,7 @@
 <script>
 import MyAnimeListItem from './MyAnimeListItem.vue'
 import axios from 'axios'
-import json from '../../src/assets/json/AnimeMenu.json'
+import json from '../../src/assets/json/animeMenu.json'
 
 export default{
     props:{

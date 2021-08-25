@@ -12,7 +12,7 @@
         </li>
         <li>
             <select v-if="jsonpath" v-model="selectAnimeYearMonth" @change="linkAnimeYearMonth($event)">
-                <option v-for="item in AnimeMenu" :key="item.name" :value="item.url">{{item.name}}</option>
+                <option v-for="item in animeMenu" :key="item.name" :value="item.url">{{item.name}}</option>
             </select>
         </li>
         </ul>
@@ -21,7 +21,7 @@
     </nav>
 </template>
 <script>
-import AnimeMenu from '../assets/json/AnimeMenu.json'
+import animeMenu from '../assets/json/animeMenu.json'
 
 
 export default {
@@ -30,7 +30,7 @@ export default {
     },
     data(){
         return {
-            AnimeMenu
+            animeMenu
         }
     },
     computed:{
