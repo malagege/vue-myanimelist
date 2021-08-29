@@ -55,6 +55,7 @@ export default{
 .myanimelist{
     display: grid;
     background: rgba(192,192,192);
+    grid-template-columns: repeat(4, 1fr);
 }
 
 /* [css - Flex-box: Align last row to grid - Stack Overflow](https://stackoverflow.com/questions/18744164/flex-box-align-last-row-to-grid) */
