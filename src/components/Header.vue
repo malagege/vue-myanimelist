@@ -6,10 +6,16 @@
         我的新番清單
         </a>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item d-inline-block">
-                <select v-if="jsonpath" v-model="selectAnimeYearMonth" @change="linkAnimeYearMonth($event)">
+            <li class="nav-item">
+                <select  class="form-select" v-if="jsonpath" v-model="selectAnimeYearMonth" @change="linkAnimeYearMonth($event)">
                     <option v-for="item in animeMenu" :key="item.name" :value="item.url">{{item.name}}</option>
                 </select>
+            </li>
+            <li class="nav-item">
+                <router-link to="/" class="nav-link" :class="{active: $route.path.match(/\/(\d+)/)}">月份清單</router-link>
+            </li>
+            <li class="nav-item">
+                <router-link to="/all" class="nav-link" :class="{active: $route.path === '/all'}">每季清單</router-link>
             </li>
         </ul>
     </div>
@@ -47,5 +53,12 @@ export default {
 }
 </script>
 <style scoped>
+.nav-link{
+    padding-left: 8px;
+    padding-left: 8px;
+}
 
+.navbar-nav{
+    flex-direction: row;
+}
 </style>
