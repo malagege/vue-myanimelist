@@ -101,7 +101,7 @@ export default {
 .myAnimeListItem__staff{
     flex: 1;
     width: 50%;
-    background-color: rgba(128,128,128,0.5);
+    background-color: rgb(192,192,192);
     white-space: pre-line;
     padding: 5px 5px 5px 5px;
     word-break: break-all;
