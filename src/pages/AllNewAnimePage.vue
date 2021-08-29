@@ -1,6 +1,5 @@
 <template>
     <Header />
-    <hr>
     <div  class="position-relative">
         <div class="position-sticky text-center bg-white top-999"><h1>我的排名清單</h1></div>
         <MyAnimeList  v-model:items="selectedList" @changeHash="changeHash($event)"  /> 
