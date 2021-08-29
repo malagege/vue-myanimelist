@@ -5,18 +5,13 @@
         <img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
         我的新番清單
         </a>
-        <div id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-            <button class="btn">說明</button>
-        </li>
-        <li>
-            <select v-if="jsonpath" v-model="selectAnimeYearMonth" @change="linkAnimeYearMonth($event)">
-                <option v-for="item in animeMenu" :key="item.name" :value="item.url">{{item.name}}</option>
-            </select>
-        </li>
+            <li class="nav-item d-inline-block">
+                <select v-if="jsonpath" v-model="selectAnimeYearMonth" @change="linkAnimeYearMonth($event)">
+                    <option v-for="item in animeMenu" :key="item.name" :value="item.url">{{item.name}}</option>
+                </select>
+            </li>
         </ul>
-        </div>
     </div>
     </nav>
 </template>
