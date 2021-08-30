@@ -5,7 +5,7 @@
         <img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
         我的新番清單
         </a>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav mr-auto mb-2 me-auto mb-lg-0">
             <li class="nav-item">
                 <select  class="form-select" v-if="jsonpath" v-model="selectAnimeYearMonth" @change="linkAnimeYearMonth($event)">
                     <option v-for="item in animeMenu" :key="item.name" :value="item.url">{{item.name}}</option>
@@ -18,14 +18,20 @@
                 <router-link to="/all" class="nav-link" :class="{active: $route.path === '/all'}">每季清單</router-link>
             </li>
         </ul>
+        <SettingManager/>
     </div>
     </nav>
 </template>
 <script>
 import animeMenu from '../assets/json/animeMenu.json'
+import SettingManager from './SettingManager.vue'
+
 
 
 export default {
+    components:{
+        SettingManager
+    },
     props:{
         jsonpath: String
     },
