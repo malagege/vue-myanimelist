@@ -1,5 +1,5 @@
 
-import {  saveJSON } from './utils.js'
+import {  saveJSON } from './utils.mjs'
 import axios from 'axios'
 import * as cheerio from 'cheerio';
 

@@ -1,6 +1,6 @@
 import ora from 'ora'
-import generateAnimeMenu from './generateAnimeMenu.js'
-import generateAnimeList from './generateAnimeList.js'
+import generateAnimeMenu from './generateAnimeMenu.mjs'
+import generateAnimeList from './generateAnimeList.mjs'
 
 (async () => {
     const spinner = ora('Strart pre-building...').start()
