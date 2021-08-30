@@ -1,10 +1,10 @@
 {
   "name": "vue-myanimelist",
-  "type": "module",
+
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "json-build": "node ./scripts/build/index.js",
+    "json-build": "node  ./scripts/build/index.mjs",
     "build": "vite build",
     "serve": "vite preview"
   },
@@ -17,11 +17,13 @@
     "vue-router": "^4.0.11"
   },
   "devDependencies": {
+    "@iconify/json": "^1.1.395",
     "@popperjs/core": "^2.9.3",
     "@vitejs/plugin-vue": "^1.3.0",
     "@vue/compiler-sfc": "^3.0.5",
     "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
+    "unplugin-icons": "^0.7.3",
     "vite": "^2.4.4"
   }
 }
