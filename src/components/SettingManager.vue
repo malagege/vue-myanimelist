@@ -12,33 +12,33 @@
         <div class="modal-body">
             <div class="header d-flex">
                 <div class="flex-grow-1">
-                    <input class="form-input" type="text" placeholder="快速搜尋" v-model="searchText">
+                    <input class="form-input" type="text" placeholder="快速搜尋" v-model.trim="searchText">
                     <button type="button" class="btn btn-light" @click="searchText =''">清空</button>
                 </div>
-                <button class="btn btn-primary">另存設定</button>
+                <button class="btn btn-primary" @click="appendSetting()">另存設定</button>
             </div>
             <hr>
-            <div class="d-flex item">
+            <div v-for="(item,index) in settings" class="item" :key="item.name" v-show="item.name.indexOf(searchText)>=0">
                 <span class="item-title">
-                    title
+                    {{ item.name }}
                 </span>
                 <div>
-                    <button class="btn btn-sm btn-secondary">
+                    <button class="btn btn-sm btn-secondary" @click="updateSettingName(item)">
                         編輯名稱
                     </button>
                 </div>
                 <div>
-                    <button class="btn btn-sm btn-info">
+                    <button class="btn btn-sm btn-info" @click="readSetting(item)">
                         讀取設定
                     </button>
                 </div>
                 <div>
-                    <button class="btn btn-sm btn-success">
+                    <button class="btn btn-sm btn-success" @click="replaceSetting(item)">
                         覆蓋設定
                     </button>
                 </div>
                 <div>
-                    <button class="btn btn-sm btn-danger">
+                    <button class="btn btn-sm btn-danger" @click="deleteSetting(item,index)">
                         <IconTrashSharp></IconTrashSharp> 
                     </button>
                 </div>
@@ -67,7 +67,13 @@ export default {
     },
     data(){
         return {
-            searchText: ''
+            searchText: '',
+            settings:[{name:'test',settingVar:{}}],
+        }
+    },
+    computed:{
+        settingFilted(){
+            return this.searchText ? this.settings.filter((obj)=>obj.name.indexOf(this.searchText)>=0) : this.settings;
         }
     },
     components:{
@@ -75,8 +81,23 @@ export default {
         IconTrashSharp
     },
     methods:{
-        alertHello(){
-            alert('hello');
+        updateSettingName(item){
+            item.name = prompt('新增設定名稱');
+        },
+        readSetting(item){
+            this.settingVar = item
+        },
+        replaceSetting(item){
+            item = this.settingVar
+        },
+        deleteSetting(item,index){
+            this.settings.splice(index,1)
+        },
+        appendSetting(){
+            let item = {}
+            item.name = prompt('新增設定名稱')
+            item.settingVar = this.settingVar
+            this.settings.unshift(item)
         }
     }
 }
@@ -84,6 +105,9 @@ export default {
 </script>
 <style scoped>
 .header{
+    display: flex;
+}
+.item{
     display: flex;
 }
 .item-title{
