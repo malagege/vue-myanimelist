@@ -18,7 +18,7 @@
                 <router-link to="/all" class="nav-link" :class="{active: $route.path === '/all'}">每季清單</router-link>
             </li>
         </ul>
-        <SettingManager/>
+        <SettingManager :settingVar="udata" @update:settingVar="updateSettingVar($event)" :storageName="'xxx'"/>
     </div>
     </nav>
 </template>
@@ -33,7 +33,8 @@ export default {
         SettingManager
     },
     props:{
-        jsonpath: String
+        jsonpath: String,
+        udata: Array,
     },
     data(){
         return {
@@ -54,6 +55,9 @@ export default {
                 throw new Error(`Problem handling something: ${err}.`);
             });
             console.log('test')
+        },
+        updateSettingVar(event){
+            this.$emit('update:udata',event)
         }
     }
 }

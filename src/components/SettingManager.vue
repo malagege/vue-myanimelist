@@ -59,7 +59,7 @@ import IconTrashSharp from '~icons/ion/trash-sharp'
 
 export default {
     props:{
-        settingVar: String,
+        settingVar: Array,
         storageName:{
             type: String,
             default: 'saveItems'
@@ -85,10 +85,13 @@ export default {
             item.name = prompt('新增設定名稱');
         },
         readSetting(item){
-            this.settingVar = item
+            // this.settingVar = item
+            this.$emit('update:settingVar',item.settingVar)
         },
         replaceSetting(item){
-            item = this.settingVar
+            // alert(JSON.stringify(item))
+            item.settingVar = this.settingVar
+            // alert(JSON.stringify(item))
         },
         deleteSetting(item,index){
             this.settings.splice(index,1)
