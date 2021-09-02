@@ -100,7 +100,9 @@ export default {
             let item = {}
             item.name = prompt('新增設定名稱')
             item.settingVar = this.settingVar
-            this.settings.unshift(item)
+            if(item?.name){
+                this.settings.unshift(item)
+            }
         }
     },
     mounted(){

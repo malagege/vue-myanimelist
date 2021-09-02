@@ -102,7 +102,7 @@ export default {
                 
                 let udata = JSON.parse(Base64.decode(this.$route.hash.substr(1)))
                 udata.forEach(obj => {
-                    animeMenu.forEach(({name})=>{
+                    openList.forEach((name)=>{
                         let oitem = this.allListObj[name].find(item => item.name === obj.name)
                         if (oitem){
                             oitem.show = obj?.show
