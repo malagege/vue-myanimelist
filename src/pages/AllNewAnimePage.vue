@@ -1,5 +1,5 @@
 <template>
-    <Header />
+    <Header :udata="routeObj" @update:udata="replaceUrl($event)" />
     <div  class="position-relative">
         <div class="position-sticky text-center bg-white top-999"><h1>我的排名清單</h1></div>
         <MyAnimeList  v-model:items="selectedList" @changeHash="changeHash($event)"  /> 
@@ -29,6 +29,14 @@ export default {
         }
     },
     computed:{
+        routeObj(){
+            let path = this.$route.path
+            let hash = this.$route.hash
+            return {
+                path,
+                hash
+            }
+        },
         selectedList(){
             let items = [];
             this.animeMenu.forEach(anime =>{
@@ -70,6 +78,48 @@ export default {
                 path: `/all/${this.urlAnimeList}`,
                 hash: '#'+Base64.encodeURL(JSON.stringify(selectedListLess))
             })
+        },
+        replaceUrl(routeObj){
+            console.log(routeObj)
+            this.$router.replace({
+                path: routeObj.path,
+                hash: routeObj.hash
+            })
+            
+            if( this.openAnimeList ){
+                let openList = this.openAnimeList.split(',')
+                console.log(openList)
+                openList.forEach(item => {
+                    if(this.allListObj[item].length === 0){
+                        this.getList(item)
+                    }
+                })
+
+                // 還原新番資料
+                animeMenu.forEach(anime =>{
+                    this.allListObj[`${anime.name}`].forEach( item => delete item.show && delete item.order )
+                })
+                
+                let udata = JSON.parse(Base64.decode(this.$route.hash.substr(1)))
+                udata.forEach(obj => {
+                    animeMenu.forEach(({name})=>{
+                        let oitem = this.allListObj[name].find(item => item.name === obj.name)
+                        if (oitem){
+                            oitem.show = obj?.show
+                            oitem.order = obj?.order
+                        }
+                    })
+                })
+            }
+
+            // let udata = JSON.parse(Base64.decode(this.$route.hash.substr(1)))
+            // udata.forEach(obj => {
+            //     let oitem = this.allListObj[jsonpath].find(item => item.name === obj.name)
+            //     if (oitem){
+            //         oitem.show = obj?.show
+            //         oitem.order = obj?.order
+            //     }
+            // });
         },
         getList(jsonpath){
             console.log('jsonpath',jsonpath)

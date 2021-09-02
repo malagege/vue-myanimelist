@@ -18,7 +18,7 @@
                 <router-link to="/all" class="nav-link" :class="{active: $route.path === '/all'}">每季清單</router-link>
             </li>
         </ul>
-        <SettingManager :settingVar="udata" @update:settingVar="updateSettingVar($event)" :storageName="'xxx'"/>
+        <SettingManager :settingVar="udata" @update:settingVar="updateSettingVar($event)" :storageName="storageName"/>
     </div>
     </nav>
 </template>
@@ -44,6 +44,9 @@ export default {
     computed:{
         selectAnimeYearMonth(){
             return '/' + this.jsonpath
+        },
+        storageName(){
+            return this.$route.path.indexOf('/all')>=0 ? 'allItem' : 'MonthItem' ;
         }
     },
     methods:{
@@ -57,6 +60,7 @@ export default {
             console.log('test')
         },
         updateSettingVar(event){
+            console.log(event)
             this.$emit('update:udata',event)
         }
     }
