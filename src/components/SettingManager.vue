@@ -68,7 +68,7 @@ export default {
     data(){
         return {
             searchText: '',
-            settings:[{name:'test',settingVar:{}}],
+            settings:[],
         }
     },
     computed:{
@@ -101,6 +101,21 @@ export default {
             item.name = prompt('新增設定名稱')
             item.settingVar = this.settingVar
             this.settings.unshift(item)
+        }
+    },
+    mounted(){
+        let temp = JSON.parse(localStorage.getItem(this.storageName))
+        if(temp?.length){
+            this.settings = temp
+        }
+    },
+    watch:{
+        settings:{
+            handler: function(){
+            console.log('save settings')
+            localStorage.setItem(this.storageName,JSON.stringify(this.settings))
+            },
+            deep: true
         }
     }
 }
