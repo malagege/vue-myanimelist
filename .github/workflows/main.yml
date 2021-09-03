@@ -36,7 +36,7 @@ jobs:
         run: |
           npm install
           npm run json-build
-          npm run build
+          npm run build -- --mode github
           
       # Runs a single command using the runners shell
       - name: Deploy
