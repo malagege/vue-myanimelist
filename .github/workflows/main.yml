@@ -49,6 +49,5 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           title: "deploy"
-          description: "Build and deploy to GitHub Pages![我的新番清單](https://malagege.github.io/
-vue-myanimelist)"
+          description: "Build and deploy to GitHub Pages! [我的新番清單](https://malagege.github.io/vue-myanimelist)"
           username: GitHub Actions
