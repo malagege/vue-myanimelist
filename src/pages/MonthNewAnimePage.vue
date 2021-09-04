@@ -40,6 +40,7 @@ export default {
         changeHash(ent){
             console.log('ent',ent)
             this.selectList = JSON.parse(ent)
+            this.items.sort((obj1,obj2)=> (parseInt(obj1?.order)||999) - (parseInt(obj2.order)||999))
             this.$router.replace({hash: '#'+Base64.encodeURL(ent)})
         },
         changeHash2(ent){
@@ -63,6 +64,7 @@ export default {
                     oitem.order = obj?.order
                 }
             });
+            this.items = this.items.sort((obj1,obj2)=> (parseInt(obj1?.order)||999) - (parseInt(obj2.order)||999))
         }).catch(e=>console.log(e))
     },
     async beforeRouteUpdate(to, from) {
@@ -116,6 +118,7 @@ export default {
                     oitem.order = obj?.order
                 }
             });
+            this.items.sort((obj1,obj2)=> (parseInt(obj1?.order)||999) - (parseInt(obj2.order)||999))
         }).catch(e=>console.log(e))
     },
 }

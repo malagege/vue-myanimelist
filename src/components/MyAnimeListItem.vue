@@ -2,7 +2,6 @@
     <div class="myAnimeListItem"
         @click="toggle($event)" 
         @contextmenu="orderItem($event)" 
-        :style="{order: item.order}"
         :data-order="item.order"
     >
         <div class="cancel" :class="{hidden: item.show}"></div>

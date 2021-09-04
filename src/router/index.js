@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 // import json from '../assets/json/animeMenu.json'
 import MonthNewAnimePage from '../pages/MonthNewAnimePage.vue'
-import AllNewAnimePage from '../pages/AllNewAnimePage.vue'
+const  AllNewAnimePage = () => import('../pages/AllNewAnimePage.vue')
 import animeMenu from'../assets/json/animeMenu.json'
 
 const routes = [

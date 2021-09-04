@@ -42,6 +42,7 @@ export default {
             this.animeMenu.forEach(anime =>{
                 console.log('selectedList()',this.allListObj[anime.name])
                 console.log('anime.name', anime.name)
+                this.allListObj[anime.name] = this.allListObj[anime.name]?.sort((obj1,obj2)=> (parseInt(obj1?.order)||999) - (parseInt(obj2.order)||999))
                 let selectedItems  = this.allListObj[anime.name]?.filter( (obj)=> obj?.show || obj?.order )
                 if(selectedItems){
                     items.push(...selectedItems)
@@ -49,7 +50,8 @@ export default {
             })
             console.log('selectedList::items',items)
             // items = JSON.parse(JSON.stringify(items))
-            return items
+            // console.log(JSON.parse(JSON.stringify(items.sort((obj1,obj2)=> (parseInt(obj1?.order)||999) - parseInt(obj2.order)||999))))
+            return items.sort((obj1,obj2)=> (parseInt(obj1?.order)||999) - (parseInt(obj2.order)||999))
         },
         urlAnimeList(){
             let openAnimeList = []
@@ -74,6 +76,7 @@ export default {
                 }
                 
             })
+
             this.$router.replace({
                 path: `/all/${this.urlAnimeList}`,
                 hash: '#'+Base64.encodeURL(JSON.stringify(selectedListLess))
@@ -143,6 +146,7 @@ export default {
                         oitem.order = obj?.order
                     }
                 });
+                this.allListObj[jsonpath] = this.allListObj[jsonpath].sort((obj1,obj2)=> (parseInt(obj1?.order)||999) - (parseInt(obj2.order)||999))
             }).catch(e=>console.log(e))
         }
     },
