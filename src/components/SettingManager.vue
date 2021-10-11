@@ -18,7 +18,7 @@
                 <button class="btn btn-primary" @click="appendSetting()">另存設定</button>
             </div>
             <hr>
-            <div v-for="(item,index) in settings" class="item" :key="item.name" v-show="item.name.indexOf(searchText)>=0">
+            <div v-for="(item,index) in settings" class="item" :key="item.name" v-show="item?.name.indexOf(searchText)>=0">
                 <span class="item-title">
                     {{ item.name }}
                 </span>
@@ -73,7 +73,7 @@ export default {
     },
     computed:{
         settingFilted(){
-            return this.searchText ? this.settings.filter((obj)=>obj.name.indexOf(this.searchText)>=0) : this.settings;
+            return this.searchText ? this.settings.filter((obj)=>obj?.name.indexOf(this.searchText)>=0) : this.settings;
         }
     },
     components:{
