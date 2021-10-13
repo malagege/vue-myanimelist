@@ -106,10 +106,15 @@ export default {
         }
     },
     mounted(){
-        let temp = JSON.parse(localStorage.getItem(this.storageName))
-        if(temp?.length){
-            this.settings = temp
+        try{
+            let temp = JSON.parse(localStorage.getItem(this.storageName))
+            if(temp?.length){
+                this.settings = temp
+            }
+        }catch(e){
+            console.error(e);
         }
+
     },
     watch:{
         settings:{
