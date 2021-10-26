@@ -16,7 +16,7 @@
                     <button type="button" class="btn btn-light" @click="searchText =''">清空</button>
                 </div>
                 <file-reader @load="loadFileText($event)">
-                    <div class="btn btn-primary">匯入檔案</div>
+                    <div class="btn btn-secondary">匯入檔案</div>
                 </file-reader>
                 <button class="btn btn-primary" @click="appendSetting()">另存設定</button>
             </div>
@@ -41,7 +41,7 @@
                     </button>
                 </div>
                 <div>
-                    <button class="btn btn-sm btn-success" @click="downloadTextFile(item)">
+                    <button class="btn btn-sm btn-secondary" @click="downloadTextFile(item)">
                         <FileDownload></FileDownload>
                     </button>
                 </div>
