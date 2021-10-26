@@ -15,6 +15,9 @@
                     <input class="form-input" type="text" placeholder="快速搜尋" v-model.trim="searchText">
                     <button type="button" class="btn btn-light" @click="searchText =''">清空</button>
                 </div>
+                <file-reader @load="loadFileText($event)">
+                    <div class="btn btn-primary">匯入檔案</div>
+                </file-reader>
                 <button class="btn btn-primary" @click="appendSetting()">另存設定</button>
             </div>
             <hr>
@@ -38,6 +41,11 @@
                     </button>
                 </div>
                 <div>
+                    <button class="btn btn-sm btn-success" @click="downloadTextFile(item)">
+                        <FileDownload></FileDownload>
+                    </button>
+                </div>
+                <div>
                     <button class="btn btn-sm btn-danger" @click="deleteSetting(item,index)">
                         <IconTrashSharp></IconTrashSharp> 
                     </button>
@@ -56,6 +64,8 @@
 <script>
 import IconSetting from '~icons/icon-park-outline/setting-two'
 import IconTrashSharp from '~icons/ion/trash-sharp'
+import FileDownload from '~icons/ri/file-download-fill'
+import FileReader from '../utils/FileReader.vue'
 
 export default {
     props:{
@@ -69,6 +79,7 @@ export default {
         return {
             searchText: '',
             settings:[],
+            text: '',
         }
     },
     computed:{
@@ -78,7 +89,9 @@ export default {
     },
     components:{
         IconSetting,
-        IconTrashSharp
+        IconTrashSharp,
+        FileReader,
+        FileDownload,
     },
     methods:{
         updateSettingName(item){
@@ -87,6 +100,11 @@ export default {
         readSetting(item){
             // this.settingVar = item
             this.$emit('update:settingVar',item.settingVar)
+        },
+        downloadTextFile(item){
+            let JSONData = [JSON.stringify(item)];
+            let JSONBlob = new Blob(JSONData, { type: 'application/json' });
+            this.saveData(JSONBlob, `${item?.name || '未命名'}.json`);
         },
         replaceSetting(item){
             // alert(JSON.stringify(item))
@@ -103,7 +121,40 @@ export default {
             if(item?.name){
                 this.settings.unshift(item)
             }
-        }
+        },
+        loadFileText(text){
+            try{
+        
+                let item = JSON.parse(text);
+
+                // item.name = prompt('新增設定名稱')
+                // item.settingVar = this.settingVar
+                let {name,settingVar} = item;
+                if(name && settingVar){
+                    this.settings.unshift(item)
+                }else{
+                    alert("內容格式有缺失，無法匯入!!");
+                }
+            }catch(e){
+                console.error(e);
+                alert('匯入 JSON 發生錯誤，有可能是格式錯誤!!')
+            }
+        },
+        saveData(blob, fileName) { // 參考: [[WebAPIs] Blob, File 和 FileReader | PJCHENder 未整理筆記](https://pjchender.dev/webapis/webapis-blob-file/)
+            const a = document.createElement('a');
+            document.body.appendChild(a);
+            a.style = 'display: none';
+
+            // 將 blob 放到 URL 上
+            let url = window.URL.createObjectURL(blob);
+            a.href = url;
+            a.download = fileName;
+            a.click();
+
+            // 釋放記憶體
+            a.href = '';
+            window.URL.revokeObjectURL(url);
+            }
     },
     mounted(){
         try{
