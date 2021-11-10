@@ -24,12 +24,16 @@ export default async function generateAnimeMenu () {
         if (name.indexOf('新番') <= 0){
             return 
         } 
-        const regex = /(\d+年\d+月新番)/gm;
+        const regex = /((\d+)年(\d+)月新番)/gm;
         let m = regex.exec(name)
         name = m[0]
+        let ACGNTaiwanUrl = `https://acgntaiwan.github.io/Anime-List/anime-data/anime${m[2]}.${m[3]}.json`
+        let YuiWikiUrl = `https://yuc.wiki/${url}`
         let item = {
             name,
             url,
+            YuiWikiUrl,
+            ACGNTaiwanUrl,
         }
 
         json.push(item)

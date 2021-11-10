@@ -7,7 +7,7 @@ import OpenCC from 'opencc-js';
 const converter = OpenCC.Converter({ from: 'cn', to: 'tw' });
 
 async function fetchRemoteData (path) {
-    const { data } = await axios.get('https://yuc.wiki' + path)
+    const { data } = await axios.get(path)
     .catch((e) => {
         console.error(e)
         return { data: '' }
@@ -15,9 +15,14 @@ async function fetchRemoteData (path) {
     return data
 }
 
-export default async function generateAnimeMenu (animeMenu) {
+export default async function generateAnimeList (animeMenu) {
+
+    return generateAnimeListForYucWiki(animeMenu)
+}
+
+async function generateAnimeListForYucWiki(animeMenu){
     let data = ''
-    data = await fetchRemoteData(animeMenu.url)
+    data = await fetchRemoteData(animeMenu.YuiWikiUrl)
 
     const $ = cheerio.load(data)
     let res = [];
