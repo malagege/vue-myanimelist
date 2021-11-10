@@ -27,6 +27,9 @@ export default async function generateAnimeMenu () {
         const regex = /((\d+)年(\d+)月新番)/gm;
         let m = regex.exec(name)
         name = m[0]
+        if(m[3].length <2){
+            m[3] = '0' + m[3]
+        }
         let ACGNTaiwanUrl = `https://acgntaiwan.github.io/Anime-List/anime-data/anime${m[2]}.${m[3]}.json`
         let YuiWikiUrl = `https://yuc.wiki/${url}`
         let item = {

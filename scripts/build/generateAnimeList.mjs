@@ -10,14 +10,17 @@ async function fetchRemoteData (path) {
     const { data } = await axios.get(path)
     .catch((e) => {
         console.error(e)
-        return { data: '' }
+        return false
     })
     return data
 }
 
 export default async function generateAnimeList (animeMenu) {
 
-    return generateAnimeListForYucWiki(animeMenu)
+    let okGen = await generateAnimeListForACGNTaiwanUrl(animeMenu)
+    if( okGen === false){
+        return await generateAnimeListForYucWiki(animeMenu)
+    }
 }
 
 async function generateAnimeListForYucWiki(animeMenu){
@@ -54,4 +57,15 @@ async function generateAnimeListForYucWiki(animeMenu){
 
     saveJSON(animeMenu.name, res)
     return res
+}
+
+async function generateAnimeListForACGNTaiwanUrl(animeMenu){
+    let data = ''
+    data = await fetchRemoteData(animeMenu.ACGNTaiwanUrl)
+
+    if( data === false){
+        return false;
+    }
+    
+    return saveJSON(animeMenu.name, data)
 }

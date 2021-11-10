@@ -10,7 +10,7 @@
         <div class="flex">
             <img class="myAnimeListItem__animeImg" :src="item.img" referrerpolicy="no-referrer" >
             <pre class="myAnimeListItem__staff">
-                {{item.staff}}
+                {{item.staff||item.description}}
             </pre>
         </div>
     </div>
