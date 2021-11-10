@@ -109,6 +109,7 @@ export default {
     font-size: 13px;
     overflow: auto;
     height: 200px;
+    overflow: hidden;
 }
 
 * {
