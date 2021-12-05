@@ -95,7 +95,10 @@ export default {
     },
     methods:{
         updateSettingName(item){
-            item.name = prompt('新增設定名稱');
+            let name = prompt('修改設定名稱')
+            if(name){
+                item.name = name
+            }
         },
         readSetting(item){
             // this.settingVar = item
