@@ -7,11 +7,14 @@ import OpenCC from 'opencc-js';
 const converter = OpenCC.Converter({ from: 'cn', to: 'tw' });
 
 async function fetchRemoteData (path) {
-    const { data } = await axios.get(path)
+    const { data, status } = await axios.get(path)
     .catch((e) => {
         console.error(e)
         return false
     })
+    if(status !== 200){
+        return false;
+    }
     return data
 }
 
