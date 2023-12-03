@@ -65,10 +65,17 @@ async function generateAnimeListForYucWiki(animeMenu){
 async function generateAnimeListForACGNTaiwanUrl(animeMenu){
     let data = ''
     data = await fetchRemoteData(animeMenu.ACGNTaiwanUrl)
-
+    
     if( data === false){
         return false;
     }
     
+    // 判斷 data[].img 前面是否有 http(s)://，沒有補上 https://acgntaiwan.github.io/Anime-List/
+    // 改寫 for 迴圈
+    data.forEach((el, i) => {
+        if(!el.img.match(/^http/)){
+            data[i].img = `https://acgntaiwan.github.io/Anime-List/${el.img}`
+        }
+    })
     return saveJSON(animeMenu.name, data)
 }
