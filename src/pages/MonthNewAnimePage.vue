@@ -3,7 +3,7 @@
     <MyAnimeList v-model:items="items"  @changeHash="changeHash($event)"/>
 </template>
 <script>
-import animeMenu from '../assets/json/animeMenu.json'
+import animeMenu from '../assets/animeMenu.json'
 import {Base64} from 'js-base64'
 import Header from '../components/Header.vue'
 import MyAnimeList from '../components/MyAnimeList.vue'
@@ -37,32 +37,66 @@ export default {
         }
     },
     methods:{
-        changeHash(ent){
-            console.log('ent',ent)
-            this.selectList = JSON.parse(ent)
-            this.$router.replace({hash: '#'+Base64.encodeURL(ent)})
+        parseHashData(hash = this.$route.hash){
+            const value = (hash || '').slice(1)
+            if(!value){
+                return []
+            }
+            try{
+                return JSON.parse(Base64.decode(value))
+            }catch(e){
+                console.error(e)
+                return []
+            }
         },
-        changeHash2(ent){
-            console.log('ent',ent)
-            this.$router.replace({hash: '#'+Base64.encodeURL(JSON.stringify(ent))})
-        },
-    },
-    mounted(){
-        let selected = animeMenu.find((obj)=> obj.url === ('/'+this.jsonpath) ) || animeMenu[0]
-        console.log('selected',selected)
-        axios.get(`src/assets/json/${selected.name}.json`).then(res => {
-            this.items = res.data
-            // 取hash資料
-            console.log('this.$route.hash.substr(1)',this.$route.hash.substr(1))
-            let udata = JSON.parse(Base64.decode(this.$route.hash.substr(1)))
-            this.selectList = udata
+        applySelectedList(udata = []){
+            this.items.forEach( item => {
+                item.show = false
+                item.order = undefined
+            })
             udata.forEach(obj => {
-                let oitem = this.items.find(item => item.name === obj.name)
+                const oitem = this.items.find(item => item.name === obj.name)
                 if (oitem){
                     oitem.show = obj?.show
                     oitem.order = obj?.order
                 }
             });
+        },
+        safeFileName(target){
+            const fileName = target?.file || target?.name
+            const allowed = animeMenu.map(item => item.file || item.name)
+            const safeName = allowed.includes(fileName) ? fileName : (allowed[0] || '')
+            return encodeURIComponent(safeName)
+        },
+        changeHash(ent){
+            console.log('ent',ent)
+            try{
+                this.selectList = JSON.parse(ent)
+                this.applySelectedList(this.selectList)
+            }catch(e){
+                console.error(e)
+                this.selectList = []
+            }
+            this.$router.replace({hash: '#'+Base64.encodeURL(ent || '[]')})
+        },
+        changeHash2(ent){
+            console.log('ent',ent)
+            this.selectList = Array.isArray(ent) ? ent : []
+            this.applySelectedList(this.selectList)
+            this.$router.replace({hash: '#'+Base64.encodeURL(JSON.stringify(this.selectList))})
+        },
+    },
+    mounted(){
+        let selected = animeMenu.find((obj)=> obj.url === ('/'+this.jsonpath) ) || animeMenu[0]
+        console.log('selected',selected)
+        const fileName = this.safeFileName(selected)
+        axios.get(new URL(`../assets/${fileName}.json`, import.meta.url).href).then(res => {
+            this.items = res.data
+            // 取hash資料
+            console.log('this.$route.hash.slice(1)',this.$route.hash.slice(1))
+            const udata = this.parseHashData()
+            this.selectList = udata
+            this.applySelectedList(udata)
         }).catch(e=>console.log(e))
     },
     async beforeRouteUpdate(to, from) {
@@ -86,36 +120,21 @@ export default {
             //     this.selectList = udata
             // }
             try{
-            this.items.forEach( item => delete item.show && delete item.order )
-            let udata = JSON.parse(Base64.decode(to.hash.substr(1)))
-            // this.selectList = udata
-            udata.forEach(obj => {
-                let oitem = this.items.find(item => item.name === obj.name)
-                if (oitem){
-                    oitem.show = obj?.show
-                    oitem.order = obj?.order
-                }
-            });
+            const udata = this.parseHashData(to.hash)
+            this.applySelectedList(udata)
             }catch(e){
                 console.error(e)
             }
             return true
         }
-        console.log('to',to,'from',from);
         let selected = animeMenu.find((obj)=> obj.url === ('/'+to.params.jsonpath) ) || animeMenu[0]
-        axios.get(`src/assets/json/${selected.name}.json`).then(res => {
+        const fileName = this.safeFileName(selected)
+        axios.get(new URL(`../assets/${fileName}.json`, import.meta.url).href).then(res => {
             this.items = res.data
             // 取hash資料
-            console.log('this.$route.hash.substr(1)',this.$route.hash.substr(1))
-            let udata = JSON.parse(Base64.decode(this.$route.hash.substr(1)))
-            // this.selectList = udata
-            udata.forEach(obj => {
-                let oitem = this.items.find(item => item.name === obj.name)
-                if (oitem){
-                    oitem.show = obj?.show
-                    oitem.order = obj?.order
-                }
-            });
+            console.log('this.$route.hash.slice(1)',this.$route.hash.slice(1))
+            const udata = this.parseHashData(to.hash)
+            this.applySelectedList(udata)
         }).catch(e=>console.log(e))
     },
 }
