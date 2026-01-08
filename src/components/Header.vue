@@ -7,8 +7,8 @@
         </a>
         <ul class="navbar-nav mr-auto mb-2 me-auto mb-lg-0">
             <li class="nav-item">
-                <select  class="form-select" v-if="jsonpath" v-model="selectAnimeYearMonth" @change="linkAnimeYearMonth($event)">
-                    <option v-for="item in animeMenu" :key="item.name" :value="item.url">{{item.name}}</option>
+                <select  class="form-select" v-if="jsonpath" :value="selectAnimeYearMonth" @change="linkAnimeYearMonth($event)">
+                    <option v-for="item in animeMenu" :key="item.name" :value="item.url">{{item.label || item.name}}</option>
                 </select>
             </li>
             <li class="nav-item">
@@ -23,7 +23,7 @@
     </nav>
 </template>
 <script>
-import animeMenu from '../assets/json/animeMenu.json'
+import animeMenu from '../assets/animeMenu.json'
 import SettingManager from './SettingManager.vue'
 
 
@@ -43,7 +43,7 @@ export default {
     },
     computed:{
         selectAnimeYearMonth(){
-            return '/' + this.jsonpath
+            return this.jsonpath ? '/' + this.jsonpath : ''
         },
         storageName(){
             return this.$route.path.indexOf('/all')>=0 ? 'allItem' : 'MonthItem' ;
