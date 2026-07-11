@@ -17,10 +17,7 @@ export function useSnapshotRestore() {
   const userList = useUserList()
   const viewState = useViewState()
 
-  async function restoreSnapshot(
-    snapshot: ListSnapshot,
-    options: { collapseCrossSeason?: boolean } = {},
-  ): Promise<RestoreResult> {
+  async function restoreSnapshot(snapshot: ListSnapshot): Promise<RestoreResult> {
     const seasons = await catalog.ensureSeasons()
     for (const id of snapshot.seasonIds) {
       if (!seasons.some((s) => s.id === id)) {
@@ -30,9 +27,8 @@ export function useSnapshotRestore() {
     const loaded = await Promise.all(snapshot.seasonIds.map((id) => catalog.ensureSeason(id)))
     userList.replaceAll(snapshot.entries)
     if (snapshot.mode === 'cross-season') {
-      viewState.setCrossSeasonPair(snapshot.seasonIds, {
-        collapsed: options.collapseCrossSeason ?? false,
-      })
+      // 展開快照記錄的季度、其餘收合（FR-09.8）
+      viewState.setCrossExpanded(snapshot.seasonIds)
     }
     const knownNames = new Set(loaded.flat().map((item) => item.name))
     const missing = snapshot.entries

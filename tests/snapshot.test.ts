@@ -49,9 +49,21 @@ describe('validateSnapshot', () => {
 
   it('拒絕不合法的模式與季度數量', () => {
     expect(() => validateSnapshot({ ...valid, mode: 'weird' })).toThrow(SchemaError)
-    expect(() => validateSnapshot({ ...valid, mode: 'cross-season' })).toThrow(SchemaError)
     expect(() => validateSnapshot({ ...valid, seasonIds: ['bad-id'] })).toThrow(SchemaError)
     expect(() => validateSnapshot({ ...valid, seasonIds: [] })).toThrow(SchemaError)
+    // 單季必須恰為一季
+    expect(() =>
+      validateSnapshot({ ...valid, seasonIds: ['2026-07', '2026-04'] }),
+    ).toThrow(SchemaError)
+  })
+
+  it('跨季快照允許一個以上的季度集合，超過上限拒絕', () => {
+    const cross = (seasonIds: string[]) =>
+      validateSnapshot({ ...valid, mode: 'cross-season', seasonIds })
+    expect(cross(['2026-07']).seasonIds).toEqual(['2026-07'])
+    expect(cross(['2026-07', '2026-04', '2026-01']).seasonIds.length).toBe(3)
+    const tooMany = Array.from({ length: 65 }, (_, i) => `${1900 + i}-07`)
+    expect(() => cross(tooMany)).toThrow(SchemaError)
   })
 
   it('拒絕不合法的狀態值', () => {

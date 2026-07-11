@@ -25,9 +25,7 @@ export function useShareQuery(pageMode: SnapshotMode) {
       router.replace({ path, query: { share: rawValue } })
       return
     }
-    const result = await restoreSnapshot(snapshot, {
-      collapseCrossSeason: snapshot.mode === 'cross-season',
-    })
+    const result = await restoreSnapshot(snapshot)
     missingNames.value = result.missing
     if (snapshot.mode === 'season' && route.params.seasonId !== snapshot.seasonIds[0]) {
       // 網址季度與快照不一致時修正網址（狀態已在 store，不需重套）

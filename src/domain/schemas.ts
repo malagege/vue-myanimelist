@@ -71,8 +71,8 @@ export function validateSnapshot(value: unknown): ListSnapshot {
   if (mode === 'season' && seasonIds.length !== 1) {
     throw new SchemaError('單季快照必須剛好包含一個季度')
   }
-  if (mode === 'cross-season' && seasonIds.length !== 2) {
-    throw new SchemaError('跨季快照必須剛好包含兩個季度')
+  if (mode === 'cross-season' && seasonIds.length > 64) {
+    throw new SchemaError('跨季快照包含的季度數量過多')
   }
   if (!Array.isArray(value.entries)) throw new SchemaError('快照缺少清單項目')
   const entries = value.entries.map((entry, i) => validateUserAnimeState(entry, `第 ${i + 1} 筆`))
