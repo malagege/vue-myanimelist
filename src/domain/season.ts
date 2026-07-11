@@ -50,3 +50,19 @@ export function legacyLabelToSeasonId(label: string): string | null {
   if (!m) return null
   return seasonId(Number(m[1]), Number(m[2]) as SeasonMonth)
 }
+
+/** 日期所屬季度 id（月份向下取到 1/4/7/10）。 */
+export function currentSeasonId(date: Date = new Date()): string {
+  const month = date.getMonth() + 1
+  const seasonMonth = [10, 7, 4, 1].find((m) => m <= month) as SeasonMonth
+  return seasonId(date.getFullYear(), seasonMonth)
+}
+
+/** 前一個季度 id。 */
+export function previousSeasonId(id: string): string | null {
+  const parsed = parseSeasonId(id)
+  if (!parsed) return null
+  const index = SEASON_MONTHS.indexOf(parsed.month)
+  if (index === 0) return seasonId(parsed.year - 1, 10)
+  return seasonId(parsed.year, SEASON_MONTHS[index - 1])
+}

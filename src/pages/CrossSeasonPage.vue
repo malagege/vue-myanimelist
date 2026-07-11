@@ -2,6 +2,7 @@
     <AppHeader :seasons="catalogState.seasons">
         <template #actions>
             <ShareButton :build-snapshot="buildSnapshot" :disabled="!anySeasonReady" />
+            <PresetManagerButton :build-snapshot="buildSnapshot" :snapshot-ready="anySeasonReady" />
         </template>
     </AppHeader>
     <main class="my-3">
@@ -75,6 +76,7 @@ import { useRoute } from 'vue-router'
 import AppHeader from '../components/AppHeader.vue'
 import AnimeGrid from '../components/AnimeGrid.vue'
 import ShareButton from '../features/sharing/ShareButton.vue'
+import PresetManagerButton from '../features/presets/PresetManagerButton.vue'
 import { useAnimeCatalog } from '../stores/animeCatalog'
 import { useUserList } from '../stores/userList'
 import { useViewState } from '../stores/viewState'
@@ -84,7 +86,7 @@ import { createSnapshot, isMeaningfulState } from '../domain/snapshot'
 import { seasonLabel } from '../domain/season'
 
 export default {
-    components: { AppHeader, AnimeGrid, ShareButton },
+    components: { AppHeader, AnimeGrid, ShareButton, PresetManagerButton },
     setup() {
         const route = useRoute()
         const catalog = useAnimeCatalog()

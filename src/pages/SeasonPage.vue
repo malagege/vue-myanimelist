@@ -6,6 +6,7 @@
     >
         <template #actions>
             <ShareButton :build-snapshot="buildSnapshot" :disabled="!isReady" />
+            <PresetManagerButton :build-snapshot="buildSnapshot" :snapshot-ready="isReady" />
         </template>
     </AppHeader>
     <main class="container my-3">
@@ -41,6 +42,7 @@ import { useRoute, useRouter } from 'vue-router'
 import AppHeader from '../components/AppHeader.vue'
 import AnimeGrid from '../components/AnimeGrid.vue'
 import ShareButton from '../features/sharing/ShareButton.vue'
+import PresetManagerButton from '../features/presets/PresetManagerButton.vue'
 import { useAnimeCatalog } from '../stores/animeCatalog'
 import { useUserList } from '../stores/userList'
 import { useShareQuery } from '../features/sharing/useShareQuery'
@@ -48,7 +50,7 @@ import { compareByRank } from '../domain/sort'
 import { createSnapshot } from '../domain/snapshot'
 
 export default {
-    components: { AppHeader, AnimeGrid, ShareButton },
+    components: { AppHeader, AnimeGrid, ShareButton, PresetManagerButton },
     props: {
         seasonId: { type: String, required: true },
     },
