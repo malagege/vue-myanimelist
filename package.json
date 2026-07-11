@@ -1,18 +1,20 @@
 {
   "name": "vue-myanimelist",
-
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "json-build": "node  ./scripts/build/index.mjs",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "test": "vitest run",
+    "data:update": "node scripts/data-update/index.mjs"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
     "js-base64": "^3.6.1",
     "opencc-js": "^1.0.3",
     "ora": "^5.4.1",
+    "pako": "^2.2.0",
     "vue": "^3.0.5",
     "vue-router": "^4.0.11"
   },
@@ -24,6 +26,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
     "unplugin-icons": "^0.7.3",
-    "vite": "^2.4.4"
+    "vite": "^2.4.4",
+    "vitest": "^4.1.10"
   }
 }
