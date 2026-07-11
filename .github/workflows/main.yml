@@ -1,9 +1,6 @@
-# This is a basic workflow to help you get started with Actions
 name: deploy
 
-# Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches:
       - master
@@ -11,39 +8,41 @@ on:
     branches:
       - master
   schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '0 0 10,20 * *'
-
-
-  # Allows you to run this workflow manually from the Actions tab
+    # 每月 10、20 日自動更新資料並部署（產品決策 15）
+    - cron: '0 0 10,20 * *'
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          node-version: '16'
-      - name: Install & Build # 執行指令
-        run: |
-          npm install
-          npm run json-build
-          npm run build -- --mode github
-          
-      # Runs a single command using the runners shell
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test
+
+      # 資料更新與網站建置分開顯示結果（FR-01.9）
+      - name: Update anime data
+        run: npm run data:update
+
+      - name: Build site
+        run: npm run build -- --mode github
+
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v4
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages # deploy 到 gh-pages 這個分支
-          folder: dist # build 後的資料夾
+          branch: gh-pages
+          folder: dist
+
       - uses: sarisia/actions-status-discord@v1
         if: always()
         with:

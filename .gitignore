@@ -3,5 +3,11 @@ node_modules
 dist
 dist-ssr
 *.local
+favicon.ico
+
+# 產生的動畫資料（由 npm run data:update 產生，只保留 public/data 一份）
+public/data/
+
+# 舊資料輸出位置（Phase 6 移除舊管線後可刪除）
 src/assets/json/*.json
 public/src/assets/json/*.json
