@@ -14,9 +14,9 @@
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "@popperjs/core": "^2.9.3",
+    "@popperjs/core": "^2.11.8",
     "@vitejs/plugin-vue": "^6.0.7",
-    "bootstrap": "^5.1.0",
+    "bootstrap": "^5.3.8",
     "vite": "^7.3.6",
     "vitest": "^4.1.10"
   }
