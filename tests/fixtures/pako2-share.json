@@ -1,0 +1,29 @@
+{
+  "pakoVersion": "2.2.0",
+  "payload": "v2.q1YqSy0qzszPU7Iy0lHKzU9JVbJSSi7KLy7WLU5NLAaK6yhBGJ4pxUpW0UpGBkZmugYmQGEIy1wpVkcpNa-kKDMVJF-tlJeYCzLjxcQ1Lxsan89qedE180Vf54vJ60AmlSSWlBaDbMjPLchJLUlNAQoWJeZlA4UMlWp14Lqf7Op52tv4ZMe051saXs7e_WzD4uez173saUE2ozyxJDkjMy8dbkReaU4Okhkf5vfseNzc9rhp5-Pmjid75zyd3PhozgpkEwpyEvPykN0Q_HzLLKXa2FoA",
+  "expected": {
+    "version": 2,
+    "mode": "cross-season",
+    "seasonIds": [
+      "2026-04",
+      "2026-07"
+    ],
+    "entries": [
+      {
+        "name": "葬送的芙莉蓮",
+        "status": "completed",
+        "rank": "1"
+      },
+      {
+        "name": "二十世紀電氣目錄",
+        "status": "watching",
+        "rank": null
+      },
+      {
+        "name": "🌸テスト作品✨",
+        "status": "planned",
+        "rank": "S級"
+      }
+    ]
+  }
+}
