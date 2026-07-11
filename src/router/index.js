@@ -1,28 +1,27 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-
-// import json from '../assets/json/animeMenu.json'
-import MonthNewAnimePage from '../pages/MonthNewAnimePage.vue'
-import AllNewAnimePage from '../pages/AllNewAnimePage.vue'
-import animeMenu from'../assets/json/animeMenu.json'
+import SeasonPage from '../pages/SeasonPage.vue'
+import CrossSeasonPage from '../pages/CrossSeasonPage.vue'
+import NotFoundPage from '../pages/NotFoundPage.vue'
+import { legacyPathToSeasonId } from '../domain/season'
 
 const routes = [
-    { path:'/', redirect: animeMenu[0].url},
-    { path: '/all/', component: AllNewAnimePage, props: true},
-    { path: '/all/:openAnimeList', component: AllNewAnimePage, props: true},
-    { path: '/:jsonpath', component: MonthNewAnimePage , props: true},
-    // { path: '/.*', redirect: '/'}
-];
-
-// json.forEach(data => {
-//     routes.push({ path: data.url,component: MyAnimeList})
-// });
-
-
-console.log(routes)
+    { path: '/', redirect: '/season/latest' },
+    { path: '/season/:seasonId', component: SeasonPage, props: true },
+    { path: '/cross-season', component: CrossSeasonPage },
+    // 相容層：舊路由導向新頁面；舊純 Base64 分享 payload 不解析（FR-10.2、產品決策 9）
+    { path: '/all/:openAnimeList*', redirect: () => ({ path: '/cross-season', hash: '' }) },
+    {
+        path: '/:legacyPath(\\d{6})',
+        redirect: (to) => {
+            const seasonId = legacyPathToSeasonId(String(to.params.legacyPath))
+            return { path: seasonId ? `/season/${seasonId}` : '/season/latest', hash: '' }
+        },
+    },
+    { path: '/:pathMatch(.*)*', component: NotFoundPage },
+]
 
 export default createRouter({
-    // 4. 內部提供了 history 模式的實現。為了簡單起見，我們在這裡使用 hash 模式。
+    // GitHub Pages 繼續使用 hash history（FR-08.6）
     history: createWebHashHistory(),
-    routes, // `routes: routes` 的縮寫
-  })
-  
+    routes,
+})

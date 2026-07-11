@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 200">
+  <rect width="150" height="200" fill="#dee2e6"/>
+  <text x="75" y="95" text-anchor="middle" fill="#6c757d" font-size="13" font-family="sans-serif">圖片</text>
+  <text x="75" y="115" text-anchor="middle" fill="#6c757d" font-size="13" font-family="sans-serif">無法載入</text>
+</svg>
