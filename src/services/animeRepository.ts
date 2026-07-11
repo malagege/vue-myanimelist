@@ -6,7 +6,9 @@ import type { Season } from '../domain/season'
 import type { AnimeAppearance } from '../domain/anime'
 import { validateSeasonList, validateSeasonData } from '../domain/schemas'
 
-const BASE: string = (import.meta as unknown as { env: Record<string, string> }).env.BASE_URL || '/'
+const rawBase: string = (import.meta as unknown as { env: Record<string, string> }).env.BASE_URL || '/'
+// BASE_URL 依 VITE_BASE 原樣輸出，可能沒有結尾斜線；一律正規化，避免拼出錯誤網址
+const BASE: string = rawBase.endsWith('/') ? rawBase : `${rawBase}/`
 
 async function fetchJson(url: string): Promise<unknown> {
   const res = await fetch(url)
